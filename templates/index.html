@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voice Synthesizer</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <h1>Voice Synthesizer</h1>
-    <form action="/synthesize" method="post">
-        <label for="text">Enter text:</label><br>
-        <textarea id="text" name="text" rows="4" cols="50"></textarea><br><br>
-        <input type="submit" value="Synthesize">
-    </form>
+    <div class="container">
+        <h1>Voice Synthesizer</h1>
+        <form method="POST">
+            <textarea name="text" placeholder="Enter text here..." required></textarea>
+            <button type="submit">Synthesize Voice</button>
+        </form>
+    </div>
 </body>
 </html>

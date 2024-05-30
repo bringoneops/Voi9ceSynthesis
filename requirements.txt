@@ -1,2 +1,5 @@
-Flask==2.1.1
-gTTS==2.2.3
+Flask==2.0.1
+tensorflow==2.4.1
+numpy==1.20.3
+scipy==1.6.3
+tensorflow-tts==0.7.0
