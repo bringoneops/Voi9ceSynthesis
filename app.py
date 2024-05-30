@@ -1,6 +1,6 @@
-from flask import Flask, request, render_template, send_file
+from flask import Flask, request, jsonify, render_template, send_file
+from gtts import gTTS
 import os
-from voice_synthesis import synthesize_text, save_waveform
 
 app = Flask(__name__)
 
@@ -10,11 +10,15 @@ def index():
 
 @app.route('/synthesize', methods=['POST'])
 def synthesize():
-    text = request.form['text']
-    mel_spectrogram = synthesize_text(text)
-    output_file = "static/output.wav"
-    save_waveform(mel_spectrogram, output_file)
-    return send_file(output_file, as_attachment=True)
+    text = request.form.get('text')
+    if not text:
+        return jsonify({'error': 'No text provided'}), 400
+    
+    tts = gTTS(text)
+    file_path = 'output.mp3'
+    tts.save(file_path)
 
-if __name__ == "__main__":
-    app.run(debug=True)
+    return send_file(file_path, as_attachment=True)
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
