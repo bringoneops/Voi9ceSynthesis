@@ -1,4 +1,3 @@
-Flask
-tensorflow
-tensorflow-tts
-soundfile
+Flask==3.0.3
+tensorflow==2.16.1
+tensorflow-tts==0.0.12  # Use the correct version if available
