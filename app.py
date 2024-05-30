@@ -13,6 +13,7 @@ processor = AutoProcessor.from_pretrained("tensorspeech/tts-tacotron2-ljspeech-e
 tacotron2 = TFAutoModel.from_pretrained("tensorspeech/tts-tacotron2-ljspeech-en")
 mb_melgan = TFAutoModel.from_pretrained("tensorspeech/tts-mb_melgan-ljspeech-en")
 
+
 def synthesize_voice(text):
     # Text to mel spectrogram
     input_ids = processor.text_to_sequence(text)
@@ -27,16 +28,23 @@ def synthesize_voice(text):
 
     return 22050, audio.numpy()
 
-@app.route('/', methods=['GET', 'POST'])
+
+@app.route("/", methods=["GET", "POST"])
 def index():
-    if request.method == 'POST':
-        text = request.form['text']
+    if request.method == "POST":
+        text = request.form["text"]
         sample_rate, audio = synthesize_voice(text)
         audio_file = io.BytesIO()
         write(audio_file, sample_rate, audio)
         audio_file.seek(0)
-        return send_file(audio_file, mimetype="audio/wav", as_attachment=True, attachment_filename="synthesized.wav")
-    return render_template('index.html')
+        return send_file(
+            audio_file,
+            mimetype="audio/wav",
+            as_attachment=True,
+            attachment_filename="synthesized.wav",
+        )
+    return render_template("index.html")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run(debug=True)
